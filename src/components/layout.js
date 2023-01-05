@@ -12,7 +12,7 @@ const StyledContent = styled.div`
 
 const Layout = ({ children, location }) => {
   const isHome = location.pathname === '/';
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(isHome);
 
   // Sets target="_blank" rel="noopener noreferrer" on external links
   const handleExternalLinks = () => {
@@ -28,6 +28,7 @@ const Layout = ({ children, location }) => {
   };
 
   useEffect(() => {
+    setTimeout(() => setIsLoading(false), 10)
     if (isLoading) {
       return;
     }
@@ -58,9 +59,7 @@ const Layout = ({ children, location }) => {
             Skip to Content
           </a>
 
-          {isLoading && isHome ? (
-            <Loader finishLoading={() => setIsLoading(false)} />
-          ) : (
+          {isLoading && isHome ? null : (
             <StyledContent>
               <Nav isHome={isHome} />
               <Social isHome={isHome} />
